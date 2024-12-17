@@ -1,15 +1,15 @@
 const { Client } = require("pg");
-require("dotenv").config({ path: '../.env' });
+require("dotenv").config();
 
-console.log(process.env);
-const SQL =  `
+const SQL = `
 CREATE TABLE IF NOT EXISTS users (
     user_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR (200)
 );
 
 INSERT INTO users (name) 
-VALUES ('jimmy');
+VALUES ('jimmy'),
+('test');
 
 CREATE TABLE IF NOT EXISTS pins (
     pin_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -20,7 +20,9 @@ CREATE TABLE IF NOT EXISTS pins (
 );
 
 INSERT INTO pins (longitude, latitude, user_id)
-VALUES (45,45,1);
+VALUES 
+    (45,45,1),
+    (45,46,2)
 `;
 
 async function main() {
