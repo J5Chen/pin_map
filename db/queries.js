@@ -1,8 +1,9 @@
 const pool = require('./pool');
 
+//pin queries
 async function createPin(longitude, latitude, userId) {
     const result = await pool.query(
-        `
+    `
     INSERT INTO pins (longitude, latitude, user_id)
     VALUES ($1, $2, $3);
     `,
@@ -25,28 +26,37 @@ async function removePinById(pinId) {
     return results;
 }
 
-
-//todo
-async function removePinById(userId) {
-    row = findPinsByUser(userId);
-    
-    return results;
-}
-
+//users queries
 async function createUser(name) {
-    const result = await pool.query(
+    const {rows} = await pool.query(
     `
     INSERT INTO users (name)
     VALUES ($1);
     `,
         [name]
     );
+    return rows;
 }
 
-//todo
-async function deleteUser() {
-    const { rows } = await pool.query("SELECT * FROM pins");
+async function findAllUsers() {
+    const { rows } = await pool.query("SELECT * FROM users");
     return rows;
+}
+
+async function findUserById(userId) {
+    const {rows} = await pool.query("SELECT * FROM users WHERE user_id = $1", [userId]);
+    return rows;
+}
+
+async function updateUser(newName, userId) {
+    console.log(newName, userId)
+    const {rows} = await pool.query("UPDATE users SET name = $1 WHERE user_id = $2", [newName, userId]);
+    return rows;
+}
+
+async function removeUser(userId) {
+    const results = await pool.query("DELETE FROM users WHERE user_id = $1", [userId]);
+    return results;
 }
 
 module.exports = {
@@ -55,5 +65,8 @@ module.exports = {
     removePinById,
     createPin,
     createUser,
-    deleteUser
+    findAllUsers,
+    findUserById,
+    updateUser,
+    removeUser
 };
