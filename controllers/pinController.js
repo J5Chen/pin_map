@@ -1,4 +1,5 @@
-const db = require("../db/queries")
+const db = require("../db/queries");
+const userRouter = require("../routes/userRouter");
 
 async function postPin(req, res) {
     console.log(req.body);

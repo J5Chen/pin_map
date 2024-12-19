@@ -25,7 +25,6 @@ async function patchUser (req, res) {
 
 async function deleteUserById(req, res) {
     const userId = req.params.userId;
-    console.log(userId)
     const result = await db.removeUser(userId);
     res.redirect("/users");
 }
