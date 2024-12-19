@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/pins", pinRouter);
 app.use("/users", userRouter);
 
-const PORT = 3000;
+const PORT = 8000;
 app.listen(PORT, ()=> {
     console.log(`Pin app ${PORT}!`);
 });
