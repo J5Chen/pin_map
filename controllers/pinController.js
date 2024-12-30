@@ -2,8 +2,8 @@ const db = require("../db/queries");
 const userRouter = require("../routes/userRouter");
 
 async function postPin(req, res) {
-    console.log(req.body);
-    const result = await db.createPin(req.body.longitude, req.body.latitude, req.body.user_id)
+    const resultUser = await db.createUser(req.body.name);
+    const resultPin = await db.createPin(req.body.longitude, req.body.latitude, resultUser);
     res.redirect("/pins")
 }
 

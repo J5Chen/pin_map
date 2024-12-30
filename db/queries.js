@@ -5,13 +5,16 @@ async function createPin(longitude, latitude, userId) {
     const result = await pool.query(
     `
     INSERT INTO pins (longitude, latitude, user_id)
-    VALUES ($1, $2, $3);
+    VALUES ($1, $2, $3)
+    RETURNING pin_id;
     `,
         [longitude, latitude, userId]
     );
+    return result;
 }
 
 async function findAllPins() {
+    console.log("test2");
     const { rows } = await pool.query("SELECT * FROM pins");
     return rows;
 }
@@ -31,11 +34,12 @@ async function createUser(name) {
     const {rows} = await pool.query(
     `
     INSERT INTO users (name)
-    VALUES ($1);
+    VALUES ($1)
+    RETURNING user_id;
     `,
         [name]
     );
-    return rows;
+    return rows[0].user_id;
 }
 
 async function findAllUsers() {

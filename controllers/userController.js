@@ -2,7 +2,7 @@ const db = require("../db/queries")
 
 async function postUser(req, res) {
     const result = await db.createUser(req.params.name)
-    res.redirect("/users")
+    res.send(result)
 }
 
 async function getAllUsers(req, res) {
