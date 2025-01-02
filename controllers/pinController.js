@@ -2,9 +2,14 @@ const db = require("../db/queries");
 const userRouter = require("../routes/userRouter");
 
 async function postPin(req, res) {
-    const resultUser = await db.createUser(req.body.name);
-    const resultPin = await db.createPin(req.body.longitude, req.body.latitude, resultUser);
-    res.redirect("/pins")
+    try {
+        const resultUser = await db.createUser(req.body.name);
+        const resultPin = await db.createPin(req.body.longitude, req.body.latitude, resultUser);
+        res.status(201).redirect("/pins");
+    } catch (error) {
+        res.status(400).send();
+        console.error("problem posting");
+    }
 }
 
 async function getAllPins(req, res) {

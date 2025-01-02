@@ -49,7 +49,8 @@
             map.addLayer(marker);
         });
     </script>
-    <form  id="myForm" action="http://localhost:3000/pins" method="post">
+    <script src="request.js"></script>
+    <form id="myForm" action="http://localhost:3000/pins" method="post">
         <input type="hidden" id="lat" name="latitude">
         <input type="hidden" id="lng" name="longitude">
         <input type="text" id="name" name="name"> </input>
