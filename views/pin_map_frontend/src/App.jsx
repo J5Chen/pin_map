@@ -1,22 +1,40 @@
 
-import './App.css'
-import React, { useRef } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import React, { useRef, useState } from "react";
+import { MapContainer, TileLayer, useMapEvents, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
+function LocationMarker() {
+  const [position, setPosition] = useState(null)
+  const map = useMapEvents({
+    click() {
+      map.locate()
+    },
+    locationfound(e) {
+      setPosition(e.latlng)
+      map.flyTo(e.latlng, map.getZoom())
+    },
+  })
+
+  return (position === null ? null : (
+    <Marker position={position}>
+      <Popup>You are here</Popup>
+    </Marker>
+  ))
+}
+
 function App() {
-  const mapRef = useRef(null);
-  const latitude = 51.505;
-  const longitude = -0.09;
   return (
-    <MapContainer center={[latitude, longitude]} zoom={13} ref={mapRef} style={{ height: "100vh", width: "100vw" }}>
+    <MapContainer
+      style={{ height: "100vh", width: "100vw" }}
+      center={{ lat: 51.505, lng: -0.09 }}
+      zoom={13}
+      scrollWheelZoom={false}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {/* Additional map layers or components can be added here */}
+      <LocationMarker />
     </MapContainer>
-
   )
 }
 
