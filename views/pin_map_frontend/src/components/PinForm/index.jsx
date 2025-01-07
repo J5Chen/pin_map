@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Map from "../Map";
-import axios from "axios"
+import pinService from "../../utils/pinService";
 
 function PinForm() {
     const [formData, setFormData] = useState({ nickname: "", message: "" });
@@ -20,17 +20,13 @@ function PinForm() {
         console.log(formData);
         console.log(position);
 
-        axios.post('http://localhost:3000/pins', {
-            longitude: position.lat,
-            latitude: position.lng,
-            name: formData.nickname
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        pinService.create(
+            {
+                longitude: position.lat,
+                latitude: position.lng,
+                name: formData.nickname
+            }
+        )
     }
 
     return (
