@@ -18,20 +18,20 @@ function PinForm() {
     function handleSubmit(e) {
         e.preventDefault();
         console.log(formData);
-        console.log(position);
 
         pinService.create(
             {
                 longitude: position.lat,
                 latitude: position.lng,
-                name: formData.nickname
+                name: formData.nickname,
+                message: formData.message
             }
         )
     }
 
     return (
         <>
-            <Map handlePosition={updatePosition} />
+            <Map handlePosition={updatePosition} message={formData.message}/>
             <form onSubmit={handleSubmit}>
                 <input
                     value={formData.nickname}
