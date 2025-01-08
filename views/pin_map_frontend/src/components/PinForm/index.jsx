@@ -21,8 +21,8 @@ function PinForm() {
 
         pinService.create(
             {
-                longitude: position.lat,
-                latitude: position.lng,
+                longitude: position.lng,
+                latitude: position.lat,
                 name: formData.nickname,
                 message: formData.message
             }

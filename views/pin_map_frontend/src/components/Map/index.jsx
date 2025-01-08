@@ -59,9 +59,9 @@ function Map({ handlePosition, message }) {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <LocationMarker handlePosition={handlePosition} message={message} />
-                {isLoaded && console.log({ "lat": Number(initialpins[10].latitude), "lng": Number(initialpins[10].longitude) })}
-                {isLoaded && <SavedMarker position={{ "lat": Number(initialpins[10].longitude), "lng": Number(initialpins[10].latitude)}} message="test" />}
+                <LocationMarker handlePosition={handlePosition} message={message} />   
+                {isLoaded && initialpins.map((pins) => <SavedMarker position={{ "lat": pins.latitude, "lng": pins.longitude}} message={pins.message} />)}        
+
             </MapContainer>
         </>
 
