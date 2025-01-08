@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, useMapEvents, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import pinService from "../../utils/pinService";
 
-
-function SavedMarker({ position, message }) {
+function SavedMarker({ position, message, name }) {
     return (position === null ? null : (
         <Marker position={position}>
-            <Popup>{message}</Popup>
+            <Popup>{name} : {message}</Popup>
         </Marker>
     ))
 }
@@ -59,9 +57,9 @@ function Map({ handlePosition, message }) {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <LocationMarker handlePosition={handlePosition} message={message} />   
-                {isLoaded && initialpins.map((pins) => <SavedMarker position={{ "lat": pins.latitude, "lng": pins.longitude}} message={pins.message} />)}        
-
+                <LocationMarker handlePosition={handlePosition} message={message} />
+                {isLoaded && console.log(initialpins)}   
+                {isLoaded && initialpins.map((pin) => <SavedMarker position={{ "lat": pin.latitude, "lng": pin.longitude}} message={pin.message} name={pin.user_id}/>)}        
             </MapContainer>
         </>
 
