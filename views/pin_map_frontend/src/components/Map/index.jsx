@@ -3,14 +3,22 @@ import { MapContainer, TileLayer, useMapEvents, Marker, Popup } from "react-leaf
 import "leaflet/dist/leaflet.css";
 
 function SavedMarker({ position, message, name }) {
+    console.log(name);
     return (position === null ? null : (
-        <Marker position={position}>
-            <Popup>{name} : {message}</Popup>
+        <Marker zIndexOffset={2} position={position}>
+            <Popup>{name}: {message}</Popup>
         </Marker>
     ))
 }
 
 function LocationMarker({ handlePosition, message }) {
+    /*
+    const customIcon = L.icon({
+        iconUrl: `https://www.google.com/mapfiles/ms/micons/red-dot.png`,  // Leaflet uses Google Maps icon URLs
+        iconSize: [32, 32],  // Size of the marker
+        iconAnchor: [16, 32], // Anchor the marker
+    });*/
+
     const [position, setPosition] = useState(null)
     const map = useMapEvents({
         click() {
@@ -25,8 +33,8 @@ function LocationMarker({ handlePosition, message }) {
     })
 
     return (position === null || message == "" ? null : (
-        <Marker position={position}>
-            <Popup>{message}</Popup>
+        <Marker zIndexOffset={200} position={position}>
+             <Popup>you: {message}</Popup>
         </Marker>
     ))
 }
@@ -57,9 +65,9 @@ function Map({ handlePosition, message }) {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                {isLoaded && initialpins.map((pin) => <SavedMarker position={{ "lat": pin.latitude, "lng": pin.longitude }} message={pin.message} name={pin.name} />)}
                 <LocationMarker handlePosition={handlePosition} message={message} />
-                {isLoaded && console.log(initialpins)}   
-                {isLoaded && initialpins.map((pin) => <SavedMarker position={{ "lat": pin.latitude, "lng": pin.longitude}} message={pin.message} name={pin.user_id}/>)}        
+                {isLoaded && console.log("here", initialpins[1])}
             </MapContainer>
         </>
 

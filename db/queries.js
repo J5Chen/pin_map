@@ -1,20 +1,19 @@
 const pool = require('./pool');
 
 //pin queries
-async function createPin(longitude, latitude, userId) {
+async function createPin(longitude, latitude, name , message) {
     const result = await pool.query(
     `
-    INSERT INTO pins (longitude, latitude, user_id)
-    VALUES ($1, $2, $3)
+    INSERT INTO pins (longitude, latitude, name, message)
+    VALUES ($1, $2, $3, $4)
     RETURNING pin_id;
     `,
-        [longitude, latitude, userId]
+        [longitude, latitude, name, message]
     );
     return result;
 }
 
 async function findAllPins() {
-    console.log("test2");
     const { rows } = await pool.query("SELECT * FROM pins");
     return rows;
 }

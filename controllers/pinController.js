@@ -3,8 +3,8 @@ const userRouter = require("../routes/userRouter");
 
 async function postPin(req, res) {
     try {
-        const resultUser = await db.createUser(req.body.name);
-        const resultPin = await db.createPin(req.body.longitude, req.body.latitude, resultUser);
+        console.log(name);
+        const resultPin = await db.createPin(req.body.longitude, req.body.latitude, req.body.name , req.body.message);
         res.status(201).redirect("/pins");
     } catch (error) {
         res.status(400).send();
